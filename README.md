@@ -1,4 +1,4 @@
-# robotedu
+# The Interactive Robotics Education Tool
 The Interactive Robotics Education Tool is an application framework designed to visualize some important robotics concepts, including: pathfinding algorithms, motion planning, and remote controlling. In creating this framework, the users are able to learn through easily accessible simulations designed by accredited robotics researchers at UNC.
 
 Many demonstrations and explanations of robotics concepts operate at a much higher level, making them inaccessible to students and unhelpful to instructors teaching these algorithms. Working alongside the Computational Robotics Laboratory at UNC, we will implement an intuitive and helpful visualization that will assist prospective robotics students, aspiring researchers, and industry professionals looking to educate themselves on concepts the lab works with completely online without needing access to robotics technology themselves.
