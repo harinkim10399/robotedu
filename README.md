@@ -9,7 +9,7 @@ As part of the tool framework, there are visualizations that focus on pathfindin
 
 ## Setup
 1. Clone this repository 
-```git clone```
+```git clone https://github.com/zuntue/robotedu.git```
 2. 
 
 ## Notes
