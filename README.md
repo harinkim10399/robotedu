@@ -9,6 +9,8 @@ As part of the tool framework, there are visualizations that focus on pathfindin
 
 ## Setup
 1. Clone this repository 
-'''git clone'''
+```git clone```
+2. 
 
 ## Notes
+Everything is still in development, and the README will be updated accordingly.
