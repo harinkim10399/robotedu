@@ -27,6 +27,41 @@ const outputInput = document.getElementById("output");
 const pidController = new PIDController(+kpInput.value, +kiInput.value, +kdInput.value);
 
 let previousTime = performance.now();
+
+const chartCanvas = document.getElementById("chart");
+const chartCtx = chartCanvas.getContext("2d");
+const chartWidth = chartCanvas.width;
+const chartHeight = chartCanvas.height;
+const chartData = [];
+
+function drawChart() {
+    chartCtx.clearRect(0, 0, chartWidth, chartHeight);
+
+    // Draw grid lines
+    chartCtx.strokeStyle = "#ddd";
+    chartCtx.beginPath();
+    for (let x = 0; x <= chartWidth; x += chartWidth / 10) {
+        chartCtx.moveTo(x, 0);
+        chartCtx.lineTo(x, chartHeight);
+    }
+    for (let y = 0; y <= chartHeight; y += chartHeight / 10) {
+        chartCtx.moveTo(0, y);
+        chartCtx.lineTo(chartWidth, y);
+    }
+    chartCtx.stroke();
+
+    // Draw process value line
+    chartCtx.beginPath();
+    chartCtx.strokeStyle = "#f00";
+    chartCtx.moveTo(0, chartHeight - chartData[0] / setpoint * chartHeight);
+    for (let i = 1; i < chartData.length; i++) {
+        const x = i / chartData.length * chartWidth;
+        const y = chartHeight - chartData[i] / setpoint * chartHeight;
+        chartCtx.lineTo(x, y);
+    }
+    chartCtx.stroke();
+}
+
 function update() {
     const currentTime = performance.now();
     const dt = (currentTime - previousTime) / 1000;
@@ -43,8 +78,16 @@ function update() {
 
     // This line simulates a process value change based on the output.
     // You can modify the factor (0.001) to control the rate of change.
-    processValueInput.value = (+processValueInput.value + output * 0.001).toFixed(2);
+    processValueInput.value = (+processValueInput.value + output * 0.1).toFixed(2);
 
-    setTimeout(update, 1000 / 20); // Run the update function approximately 60 times per second
+    // Update and draw chart
+    chartData.push(+processValueInput.value);
+    if (chartData.length > chartWidth) {
+        chartData.shift();
+    }
+    drawChart();
+
+    setTimeout(update, 1000 / 60); // Run the update function approximately 60 times per second
 }
+
 update();
