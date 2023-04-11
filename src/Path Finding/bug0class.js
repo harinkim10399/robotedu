@@ -1,4 +1,4 @@
-import {tree, node} from '../Tree_Struct/treeAll.js';
+import {tree, node} from './Tree_Struct/treeAll.js';
 class Bug0 {
 
     constructor(start, end) {
