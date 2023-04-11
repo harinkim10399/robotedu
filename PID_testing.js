@@ -30,6 +30,9 @@ const processValueInput = document.getElementById("processValue");
 const kpInput = document.getElementById("kp");
 const kiInput = document.getElementById("ki");
 const kdInput = document.getElementById("kd");
+const pOutput = document.getElementById("pOutput");
+const iOutput = document.getElementById("iOutput");
+const dOutput = document.getElementById("dOutput");
 const outputInput = document.getElementById("output");
 
 const pidController = new PIDController(+kpInput.value, +kiInput.value, +kdInput.value);
@@ -72,17 +75,47 @@ function drawChart() {
     }
     chartCtx.stroke();
 
+    // Calculate maxValue
+    const maxValue = Math.max(...chartData, +setpointInput.value) * 1.05; // Ensure maxValue is always greater than setpoint
+
     // Draw process value line
-    const setpoint = +setpointInput.value;
     chartCtx.beginPath();
     chartCtx.strokeStyle = "#f00";
-    chartCtx.moveTo(0, chartHeight - chartData[0] / setpoint * chartHeight);
+    chartCtx.moveTo(0, chartHeight - chartData[0] / maxValue * chartHeight);
     for (let i = 1; i < chartData.length; i++) {
         const x = i / chartData.length * chartWidth;
-        const y = chartHeight - chartData[i] / setpoint * chartHeight;
+        const y = chartHeight - chartData[i] / maxValue * chartHeight;
         chartCtx.lineTo(x, y);
     }
     chartCtx.stroke();
+
+    // Draw setpoint line
+    const setpoint = +setpointInput.value;
+    const setpointY = chartHeight - setpoint / maxValue * chartHeight;
+    chartCtx.strokeStyle = "#00f";
+    chartCtx.beginPath();
+    chartCtx.moveTo(0, setpointY);
+    chartCtx.lineTo(chartWidth, setpointY);
+    chartCtx.stroke();
+
+    // Add axis labels
+    chartCtx.font = "14px Arial";
+    chartCtx.fillStyle = "#000";
+    chartCtx.fillText("Time", chartWidth - 40, chartHeight - 10);
+    chartCtx.save();
+    chartCtx.rotate(-Math.PI / 2);
+    chartCtx.fillText("Process Value", -chartHeight / 2 - 50, 40);
+    chartCtx.restore();
+
+    // Add numerical label values for the process value axis
+    chartCtx.font = "12px Arial";
+    chartCtx.fillStyle = "#000";
+    const numOfYLabels = 10;
+    for (let i = 0; i <= numOfYLabels; i++) {
+        const y = chartHeight - i * (chartHeight / numOfYLabels);
+        const value = (i * maxValue / numOfYLabels).toFixed(1);
+        chartCtx.fillText(value, 5, y + 4);
+    }
 }
 function update() {
     const currentTime = performance.now();
@@ -94,6 +127,17 @@ function update() {
     pidController.kp = +kpInput.value;
     pidController.ki = +kiInput.value;
     pidController.kd = +kdInput.value;
+
+    const error = setpoint - processValue;
+    const derivative = (error - pidController.previousError) / dt;
+
+    const pTerm = pidController.kp * error;
+    const iTerm = pidController.ki * pidController.integral;
+    const dTerm = pidController.kd * derivative;
+
+    pOutput.textContent = pTerm.toFixed(2);
+    iOutput.textContent = iTerm.toFixed(2);
+    dOutput.textContent = dTerm.toFixed(2);
 
     const output = pidController.update(setpoint, processValue, dt);
     outputInput.value = output.toFixed(2);

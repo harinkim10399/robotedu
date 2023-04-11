@@ -11,6 +11,7 @@
             flex-direction: column;
             align-items: center;
         }
+
         input[type="number"] {
             width: 100px;
         }
@@ -38,10 +39,18 @@
     <label for="kd">Kd:</label>
     <input type="number" id="kd" value="0">
 </div>
+<p>
+    P Output: <span id="pOutput">0</span>
+    <br/>
+    I Output: <span id="iOutput">0</span>
+    <br/>
+    D Output: <span id="dOutput">0</span>
+</p>
 <div>
     <label for="output">Output:</label>
     <input type="number" id="output" value="0" readonly>
 </div>
+<p></p>
 <canvas id="chart" width="800" height="300" style="border:1px solid #000;"></canvas>
 <script src="PID_testing.js"></script>
 </body>
