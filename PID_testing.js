@@ -17,6 +17,14 @@ class PIDController {
     }
 }
 
+// Resize the canvas according to its container
+function resizeCanvas() {
+    chartCanvas.width = chartCanvas.offsetWidth;
+    chartCanvas.height = chartCanvas.offsetHeight;
+    chartWidth = chartCanvas.width;
+    chartHeight = chartCanvas.height;
+}
+
 const setpointInput = document.getElementById("setpoint");
 const processValueInput = document.getElementById("processValue");
 const kpInput = document.getElementById("kp");
@@ -30,9 +38,23 @@ let previousTime = performance.now();
 
 const chartCanvas = document.getElementById("chart");
 const chartCtx = chartCanvas.getContext("2d");
-const chartWidth = chartCanvas.width;
-const chartHeight = chartCanvas.height;
+resizeCanvas(); // Call this function to set the initial size of the canvas
 const chartData = [];
+
+// Call this function whenever an input value changes
+function onInputChange() {
+    pidController.kp = +kpInput.value;
+    pidController.ki = +kiInput.value;
+    pidController.kd = +kdInput.value;
+}
+
+// Add event listeners for the inputs
+setpointInput.addEventListener("input", onInputChange);
+processValueInput.addEventListener("input", onInputChange);
+kpInput.addEventListener("input", onInputChange);
+kiInput.addEventListener("input", onInputChange);
+kdInput.addEventListener("input", onInputChange);
+
 
 function drawChart() {
     chartCtx.clearRect(0, 0, chartWidth, chartHeight);
@@ -51,6 +73,7 @@ function drawChart() {
     chartCtx.stroke();
 
     // Draw process value line
+    const setpoint = +setpointInput.value;
     chartCtx.beginPath();
     chartCtx.strokeStyle = "#f00";
     chartCtx.moveTo(0, chartHeight - chartData[0] / setpoint * chartHeight);
@@ -61,7 +84,6 @@ function drawChart() {
     }
     chartCtx.stroke();
 }
-
 function update() {
     const currentTime = performance.now();
     const dt = (currentTime - previousTime) / 1000;
@@ -89,5 +111,12 @@ function update() {
 
     setTimeout(update, 1000 / 60); // Run the update function approximately 60 times per second
 }
+
+// Listen for window resize events to update the canvas size
+window.addEventListener("resize", () => {
+    resizeCanvas();
+    drawChart(); // Redraw the chart after resizing the canvas
+});
+
 
 update();
