@@ -5,8 +5,11 @@ import tricycle from './Motion Models/js_versions/Motion_Model_Tricycle';
 import diff from './Motion Models/js_versions/Motion_Model_Differential';
 import RRT from './Path Finding/RRT';
 import Bug0 from './Path Finding/bug0class'
+import './index.css';
+import reportWebVitals from './reportWebVitals';
 import $ from 'jquery';
 
+reportWebVitals();
 
 class App extends React.Component {
   /*TO SUMMARIZE, THE APP CLASS MANAGES ALL STATE CHANGES AND ACTS ALMOST LIKE A PARENT CLASS. THE TERM 'CLASS' AND 'COMPONENT' ARE USED

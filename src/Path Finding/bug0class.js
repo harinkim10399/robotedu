@@ -1,78 +1,83 @@
 import {tree, node} from './Tree_Struct/treeAll.js';
 class Bug0 {
-
-    constructor(start, end) {
+    constructor(start, end, obstacles) {
         this.start = start;
-        this.end = end;
-        this.current = start;
-        this.heading = Math.atan2(end.y - start.y, end.x - start.x);
+        this.end = end; //
         this.isOnBoundary = false;
-        distanceThreshold = 10
+        this.distanceThreshold = 10
         this.T = new tree(new node(start[0], start[1], null));
+        this.start.x = start[0]
+        this.start.y = start[1]
+        this.end.x = end[0]
+        this.end.y = end[1]
+        this.current = start
+        this.current.x = this.current[0]
+        this.current.y = this.current[1]
+        this.obstacles = obstacles
+        this.stepSize = 30
+        this.direction = {x: this.end.x - this.start.x, y: this.end.y - this.start.y}
+        this.path = [start]
+        this.distance = Math.sqrt((this.end.x - this.current.x) ** 2 + (this.end.y - this.current.y) ** 2)
       }
 // distance function
-  calculateDistance(current, goal) {
-    return Math.sqrt((goal.x - current.x) ** 2 + (goal.y - current.y) ** 2);
-  }
-
+getNextPoint() {
+    return {x: this.current.x + (this.direction.x / this.stepSize), y: this.current.y + (this.direction.y/this.stepSize)};
+}
 towardGoal() {
   // move in a straight line towards the goal
-  let dx = end.x - current.x;
-  let dy = end.y - current.y;
-  let distanceToGoal = calculateDistance(current, goalPosition);
-  if (distanceToGoal < distanceThreshold) {
-    return; // goal reached
+  if (this.distance < this.distanceThreshold) {
+    return;
   }
-  current.x += dx / distanceToGoal;
-  current.y += dy / distanceToGoal;
-  return new node(current.x, current.y, null) 
+  var nextpoint = this.getNextPoint()
+  var new_n = new node(nextpoint.x, nextpoint.y, this.current)
+  this.distance = this.calculateDistance(nextpoint, this.end)
+  this.current = nextpoint;
+  return new_n;
+
 }
-getPath() {
-    const path = [];
-    this.bug0();
-    path.push({x: this.current.x, y: this.current.y});
-    return path;
-  }
+
+calculateDistance(current, goal) {
+  return Math.sqrt((goal.x - current.x) ** 2 + (goal.y - current.y) ** 2);
+}
 
 collide (n) {
-    // let dx = end.x - current.x;
-    // let dy = end.y - current.y;
-    // if (dx > 0) {
-    //     current.x = obstacle.x - distanceThreshold;
-    // } else if (dx < 0) {
-    //     current.x = obstacle.x + obstacle.width + distanceThreshold;
-    // }
-    // if (dy > 0) {
-    //     current.y = obstacle.y - distanceThreshold;
-    // } else if (dy < 0) {
-    //     current.y = obstacle.y + obstacle.height + distanceThreshold;
-    // }
-    return new node(current.x, current.y, null)     
+    let dx = this.end.x - this.current.x;
+    let dy = this.end.y - this.current.y;
+    let distanceToGoal = this.calculateDistance(this.current, this.end);
+    if (distanceToGoal < this.distanceThreshold) {
+      return; // goal reached
+    }
+    this.current.x += dx / distanceToGoal;
+    this.current.y += dy / distanceToGoal;
+    return new node(this.current.x, this.current.y, null)   
+
 }
 
 extractPath(n) {
-    let current_n = n;
-    let path = [ new node(this.goal[0], this.goal[1], n) ];
+    var current_n = n;
+    let path = [ new node(this.end.x, this.end.y, n) ];
+//    alert("MADEITTTTT")
 
-    while ( current_n != null ) {
+    while ( current_n != null) {
         path.push(current_n);
         current_n = current_n.prev;
     }
-
     return path;
 }
 
 move (n) {        
     this.T.insert(n);
     let left = [n.getX(), n.getY()];
-    if ( this.calculateDistance(left, this.end) < 0.5 ) {
-        //alert("made it")
+    if (this.distance1(left, this.end) < 0.5 ) {
+ //       alert("made it")
         return this.extractPath(this.T, n);
-        
     }
 
     return "again";
 
+}
+distance1(p, n) {
+    return Math.sqrt( Math.pow(p[0]-n[0], 2) + Math.pow(p[1]-n[1], 2) );
 }
 }
 export default Bug0;
