@@ -993,9 +993,7 @@ class Canvas extends React.Component {
 
             var node = go[1];
             node = node.nodes[node.nodes.length - 1];
-
             var nodeNext = node.prev;
-
             while (nodeNext != null) {
 
               drawFullPath(node.x, node.y, nodeNext.x, nodeNext.y);
@@ -1026,16 +1024,11 @@ class Canvas extends React.Component {
     });
     //Does: Detects red pixel and returns true if it is not red 
     function isOpenPixel(x, y) {
-
       var p = context.getImageData(x, y, 1, 1).data;
 
       if (p[0] == 255) {
-
-
-
         return false;
       } else {
-
         return true;
       }
     }
@@ -1077,6 +1070,7 @@ class Canvas extends React.Component {
 
     function oneStep() {
       context.lineWidth = 2;
+
       if (goalCoord == null || startCoord == null) {
         return;
 
@@ -1088,25 +1082,20 @@ class Canvas extends React.Component {
 
       }
 
-
-
-
-
       var go = 'again';
       if (bug0path == null) {
         bug0path = new Bug0(AlgoStart, AlgoGoal, coordinates);
       }
       var node = bug0path.towardGoal();
-      //detects for colision
-      var blocked = true
-      //var blocked = midpointCalc(node.prev.x, node.prev.y, node.x, node.y);
+
+      //detects for collision
+      var blocked = midpointCalc(node.prev.x, node.prev.y, node.x, node.y);
 
       drawNodesAndLine(node.prev.x, node.prev.y, node.x, node.y, blocked);
 
 
       if (blocked == false) {
-        go = bug0path.collide(node);
-
+        go = bug0path.wallFollow(node);
         return go;
       } else {
 
@@ -1114,10 +1103,9 @@ class Canvas extends React.Component {
         go = bug0path.move(node);
         return go;
       }
-
-
-
+      
     }
+  
     function drawFullPath(x, y, x1, y1,) {
 
       x = parseInt(x);
@@ -1922,8 +1910,8 @@ class Footer extends React.Component {
           the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore the Differential Drive and Bicycle Motion Models or <strong>"Pathfinding Algorithm"</strong> to explore RRT. <strong>Finally, note that your motion model will stop once it hits the edge of the canvas.</strong></p></div>)
         break;
       case 'Bug0':
-        return (<div id="foot">How to get started <br></br><br></br><p>To get started, click on the button labeled <strong>"Click to set start"</strong> and put down a start marker (colored blue) on the canvas. Then, click the button labeled <strong>"Click to set goal"</strong> and set down a goal marker (colored green) on the canvas. Finally, you can draw obstacles on the canvas by clicking on the canvas itself and moving your cursor and clicking on another point in the canvas. After you have finished drawing arbitrary obstacles on the canvas, click the play button in the component labeled <strong>"Simulation Control"</strong> to watch RRT do its magic. During the running of RRT, you can pause it, reset it (clear the canvas of all things), or hit the <strong>"1 step"</strong> button.
-        This will slow down execution of Bug0 to only one iteration at a time. You can continue clicking <strong>"1 Step"</strong> after this point or clicking the play button. <strong>Note that after the optimal path is found, you can continue to run the algorithm by hitting the play button or the 1 Step button.</strong> Remember, at any time if you feel like heading back to the home page, you can click
+        return (<div id="foot">How to get started <br></br><br></br><p>To get started, click on the button labeled <strong>"Click to set start"</strong> and put down a start marker (colored blue) on the canvas. Then, click the button labeled <strong>"Click to set goal"</strong> and set down a goal marker (colored green) on the canvas. Finally, you can draw obstacles on the canvas by clicking on the canvas itself and moving your cursor and clicking on another point in the canvas. After you have finished drawing arbitrary obstacles on the canvas, click the play button in the component labeled <strong>"Simulation Control"</strong> to watch Bug0 work its magic. During the running of Bug0, you can pause it, reset it (clear the canvas of all things), or hit the <strong>"1 step"</strong> button.
+        This will slow down execution of Bug0 to only one iteration at a time. You can continue clicking <strong>"1 Step"</strong> after this point or clicking the play button. Remember, at any time if you feel like heading back to the home page, you can click
         the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore other parts of the IRET.</p></div>)
     }
   }

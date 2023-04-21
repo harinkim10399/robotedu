@@ -1,5 +1,5 @@
 import {tree, node} from './Tree_Struct/treeAll.js';
-class Bug0 {
+class Bug1 {
     constructor(start, end, obstacles) {
         this.start = start;
         this.end = end; //
@@ -91,7 +91,6 @@ extractPath(n) {
     }
     return path;
 }
-
 move (n) {        
     this.T.insert(n);
     let left = [n.getX(), n.getY()];
@@ -101,10 +100,10 @@ move (n) {
     }
 
     return "again";
-
 }
+
 distance1(p, n) {
     return Math.sqrt( Math.pow(p[0]-n[0], 2) + Math.pow(p[1]-n[1], 2) );
 }
 }
-export default Bug0;
+export default Bug1;
