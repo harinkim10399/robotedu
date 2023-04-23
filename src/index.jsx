@@ -741,7 +741,7 @@ class Canvas extends React.Component {
 
     }
   }
-  // First pass at jquery code for Bug0, mostly copied from RRT impl
+  // jQuery Bug0 impl, lots from RET impl
   jQueryCodeBug0 = () => {
     //Does: Creates canvas based off screen size
     function establishCanvas() {
@@ -764,7 +764,7 @@ class Canvas extends React.Component {
 
     establishCanvas()
     var canvas = document.getElementById("canvas");
-    document.getElementById("canvas").style.backgroundColor = "#e6edee";
+    document.getElementById("canvas").style.backgroundColor = "white";
     var context = canvas.getContext("2d");
     var cw = canvas.width;
     var ch = canvas.height;
@@ -824,7 +824,7 @@ class Canvas extends React.Component {
       setStart = true;
       setGoal = false;
     });
-    //Does: handles when cavas is clicked
+    //Does: handles when canvas is clicked
     //Do: make conditions for goal and start
     $("#canvas").mousedown(function (e) {
       if (setStart) {
@@ -854,8 +854,8 @@ class Canvas extends React.Component {
 
       context.beginPath();
       context.arc(mouseX, mouseY, 8, 0, 2 * Math.PI);
-      context.fillStyle = 'blue';
-      context.strokeStyle = 'blue';
+      context.fillStyle = 'mediumvioletred';
+      context.strokeStyle = 'mediumvioletred';
       context.stroke();
       context.fill()
       startCoord = { x: mouseX, y: mouseY };
@@ -963,8 +963,8 @@ class Canvas extends React.Component {
       if (startCoord != null) {
         context.beginPath();
         context.arc(startCoord.x, startCoord.y, 8, 0, 2 * Math.PI);
-        context.fillStyle = 'blue';
-        context.strokeStyle = 'blue';
+        context.fillStyle = 'mediumvioletred';
+        context.strokeStyle = 'mediumvioletred';
         context.stroke();
         context.fill();
       }
@@ -1032,7 +1032,7 @@ class Canvas extends React.Component {
     function isOpenPixel(x, y) {
       var p = context.getImageData(x, y, 1, 1).data;
 
-      if (p[0] == 255 || p[0] == 250) {
+      if (p[0] == 255 || p[2] == 255) {
         return false;
       } else {
         return true;
@@ -1122,7 +1122,7 @@ class Canvas extends React.Component {
       context.beginPath();
       context.moveTo(x, y);
       context.lineTo(x1, y1);
-      context.strokeStyle = 'orange';
+      context.strokeStyle = 'palegreen';
       context.stroke();
 
       // context.beginPath();
@@ -1155,14 +1155,6 @@ class Canvas extends React.Component {
       context.lineTo(x1, y1);
       context.strokeStyle = lineColor;
       context.stroke();
-
-      // context.beginPath();
-      // context.fillStyle = nodeColor;
-      // context.arc(x1, y1, 2, 0, 2 * Math.PI);
-      // context.fill();
-
-
-
 
     }
   }
@@ -2831,9 +2823,11 @@ class Footer extends React.Component {
           the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore the Differential Drive and Bicycle Motion Models or <strong>"Pathfinding Algorithm"</strong> to explore RRT. <strong>Finally, note that your motion model will stop once it hits the edge of the canvas.</strong></p></div>)
         break;
       case 'Bug0':
-        return (<div id="foot">How to get started <br></br><br></br><p>To get started, click on the button labeled <strong>"Click to set start"</strong> and put down a start marker (colored blue) on the canvas. Then, click the button labeled <strong>"Click to set goal"</strong> and set down a goal marker (colored green) on the canvas. Finally, you can draw obstacles on the canvas by clicking on the canvas itself and moving your cursor and clicking on another point in the canvas. After you have finished drawing arbitrary obstacles on the canvas, click the play button in the component labeled <strong>"Simulation Control"</strong> to watch Bug0 work its magic. During the running of Bug0, you can pause it, reset it (clear the canvas of all things), or hit the <strong>"1 step"</strong> button.
-        This will slow down execution of Bug0 to only one iteration at a time. You can continue clicking <strong>"1 Step"</strong> after this point or clicking the play button. Remember, at any time if you feel like heading back to the home page, you can click
-        the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore other parts of the IRET.</p></div>)
+        return (<div id="foot">How to get started <br></br><br></br><p>To get started, click on the button labeled <strong>"Click to set start"</strong> and put down a start marker (colored pink) on the canvas. Then, click the button labeled <strong>"Click to set goal"</strong> and set down a goal marker (colored green) on the canvas. Finally, you can draw obstacles on the canvas by clicking on the canvas itself and moving your cursor and clicking on another point in the canvas. 
+        After you have finished drawing arbitrary obstacles on the canvas, click the play button in the component labeled <strong>"Simulation Control"</strong> to watch Bug0 work its magic. 
+        You can pause or reset (clear the canvas of all things) the algorithm at any point.
+        If you want to head back to the home page, you can click
+        the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> or <strong>"Path Planning"</strong> in the Navbar to explore other parts of the IRET.</p></div>)
       case 'Bug1':
         return ( <div id="foot"> How to get started with Bug 1</div>)
       case 'Bug2':
