@@ -934,7 +934,9 @@ class Canvas extends React.Component {
         context.beginPath();
 
         context.moveTo(coordinates[obstacle][0].x, coordinates[obstacle][0].y);
+        context.arc(coordinates[obstacle][0].x, coordinates[obstacle][0].y, 3, 0, 2 * Math.PI);
         for (var index = 1; index < coordinates[obstacle].length; index++) {
+          context.arc(coordinates[obstacle][index].x, coordinates[obstacle][index].y, 3, 0, 2 * Math.PI);
           context.lineTo(coordinates[obstacle][index].x, coordinates[obstacle][index].y);
         }
         context.closePath();
