@@ -16,17 +16,19 @@ class Bug0 {
         this.distance = Math.sqrt( Math.pow(this.end.x -this.current.x, 2) + Math.pow(this.end.y-this.current.y), 2) 
         this.direction = {x: (this.end.x - this.current.x), y: (this.end.y - this.current.y)}
         const INITDIR = {x: (this.end.x - this.start.x), y: (this.end.y - this.start.y)}
-        this.stepSize = 10
+        //arctan of slope, d-b over c-a
+        this.angle = Math.atan((this.end.y-this.current.y)/(this.end.x-this.current.x))
+        this.stepSize = 30
         this.scalefactor = {x: (Math.abs(INITDIR.x - this.direction.x))/INITDIR.x, 
                             y: (Math.abs(INITDIR.y - this.direction.y))/INITDIR.y}
         this.direction_change = 30
       }
 
 getNextPoint(direction) {
-  if(this.scalefactor.x == 0 || this.scalefactor.y == 0) {
+
     return {x: this.current.x + (direction.x / (this.stepSize)), y: this.current.y + (direction.y / this.stepSize)};
-  }
-    return {x: this.current.x + (direction.x * (this.stepSize / this.scalefactor.x)), y: this.current.y + (direction.y *(this.stepSize / this.scalefactor.y))};
+
+    //return {x: this.current.x + (direction.x * (this.stepSize / this.scalefactor.x)), y: this.current.y + (direction.y *(this.stepSize / this.scalefactor.y))};
 }
 forward() {
   // move in a straight line in current direction
@@ -34,7 +36,6 @@ forward() {
     return;
   }
   var nextpoint = this.getNextPoint(this.direction)
-
   var new_n = new node(nextpoint.x, nextpoint.y, this.current)
 
   return new_n;
@@ -43,11 +44,22 @@ forward() {
 
 collide (n) {
   n = n.prev;
-  this.direction = {x: -this.direction.y, y: this.direction.x}
+  // a + rcostheta, b + rsintheta
+  let theta = 10;
+  let thetarad = theta * Math.PI/180
+  this.angle += thetarad
   this.distance = this.distance1(this.end, n)
-  this.stepSize /= 1.3
-  
+  if (this.distance < this.distanceThreshold) {
+    return;
+  }
+  //this.direction = {x: -this.direction.y, y: this.direction.x}
+  // rotation matrix
+  // (x,y) -> (xcostheta - ysintheta, xsintheta + ycostheta)
+  var new_x = this.direction.x * Math.cos(thetarad) - this.direction.y* Math.sin(thetarad)
+  var new_y = this.direction.x * Math.sin(thetarad) + this.direction.y* Math.cos(thetarad)
+  this.direction = {x: new_x, y: new_y}
  // this.direction = {x: this.end.x - nextpoint.x, y: this.end.y - nextpoint.y}
+  
   this.current = n;
   return "again";
   // the next node should be the corner point of the obstacle??
@@ -140,6 +152,7 @@ move(n) {
   this.distance = this.distance1(this.end, n)
   this.direction = {x: this.end.x - n.x, y: this.end.y - n.y}
   this.current = n;   
+  this.stepSize *= 0.99
     this.T.insert(n);
     let left = [n.getX(), n.getY()];
     if (this.distance1(left, this.end) < 0.5 ) {
