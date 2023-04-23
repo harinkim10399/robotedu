@@ -3,7 +3,6 @@ class Bug0 {
     constructor(start, end, obstacles) {
         this.start = start;
         this.end = end; //
-        this.isOnBoundary = false;
         this.distanceThreshold = 10
         this.T = new tree(new node(start[0], start[1], null));
         this.start.x = start[0]
@@ -14,45 +13,92 @@ class Bug0 {
         this.current.x = this.current[0]
         this.current.y = this.current[1]
         this.obstacles = obstacles
-        this.stepSize = 30
-        this.direction = {x: this.end.x - this.start.x, y: this.end.y - this.start.y}
-        this.distance = Math.sqrt((this.end.x - this.current.x) ** 2 + (this.end.y - this.current.y) ** 2)
-        this.direction_change = 10
+        this.distance = Math.sqrt( Math.pow(this.end.x -this.current.x, 2) + Math.pow(this.end.y-this.current.y), 2) 
+        this.direction = {x: (this.end.x - this.current.x), y: (this.end.y - this.current.y)}
+        const INITDIR = {x: (this.end.x - this.start.x), y: (this.end.y - this.start.y)}
+        this.stepSize = 10
+        this.scalefactor = {x: (Math.abs(INITDIR.x - this.direction.x))/INITDIR.x, 
+                            y: (Math.abs(INITDIR.y - this.direction.y))/INITDIR.y}
+        this.direction_change = 30
       }
+
 getNextPoint(direction) {
-    return {x: this.current.x + (direction.x / this.stepSize), y: this.current.y + (direction.y/this.stepSize)};
+  if(this.scalefactor.x == 0 || this.scalefactor.y == 0) {
+    return {x: this.current.x + (direction.x / (this.stepSize)), y: this.current.y + (direction.y / this.stepSize)};
+  }
+    return {x: this.current.x + (direction.x * (this.stepSize / this.scalefactor.x)), y: this.current.y + (direction.y *(this.stepSize / this.scalefactor.y))};
 }
-towardGoal() {
-  // move in a straight line towards the goal
+forward() {
+  // move in a straight line in current direction
   if (this.distance < this.distanceThreshold) {
     return;
   }
   var nextpoint = this.getNextPoint(this.direction)
+
   var new_n = new node(nextpoint.x, nextpoint.y, this.current)
-  this.distance = this.calculateDistance(nextpoint, this.end)
-  this.current = nextpoint;
+
   return new_n;
+}
+
+
+collide (n) {
+  n = n.prev;
+  this.direction = {x: -this.direction.y, y: this.direction.x}
+  this.distance = this.distance1(this.end, n)
+  this.stepSize /= 1.3
+  
+ // this.direction = {x: this.end.x - nextpoint.x, y: this.end.y - nextpoint.y}
+  this.current = n;
+  return "again";
+  // the next node should be the corner point of the obstacle??
+
 
 }
+
 
 calculateDistance(current, goal) {
   return Math.sqrt((goal.x - current.x) ** 2 + (goal.y - current.y) ** 2);
 }
 
 wallFollow(n) {
-    var obstacle = this.findClosestObstacle(n)
     // while the obstacle isn't next to you, keep changing the direction
-    var totheleft = {x: -this.direction.x, y: this.direction.y}
-    var leftpt = this.getNextPoint(totheleft)
-    // while (!this.isInsideObstacle(leftpt, obstacle)) {
-    //   //add to the x, subtract from the Y since we're turning to the left
-    //   this.direction.x += this.direction_change;
-    //   this.direction.y -= this.direction_change;
-    // }
-    var nextpoint = this.getNextPoint(this.direction)
-    var new_n = new node(leftpt.x, leftpt.y, this.current)
-    return new_n;
+      var totheleft = {x: -this.direction.x, y: this.direction.y}
+      var leftpt = this.getNextPoint(totheleft)
+      while (!this.isInsideObstacle(leftpt)) {
+        this.direction.x += this.direction_change;
+        this.direction.y -= this.direction_change;
+        totheleft = {x: -this.direction.x, y: this.direction.y}
+        leftpt = this.getNextPoint(totheleft)
+      }
+      //add to the x, subtract from the Y since we're turning to the left
+      var nextpoint = this.getNextPoint(this.direction)
+      this.distance = this.calculateDistance(nextpoint, this.end)
+      var new_n = new node(nextpoint.x, nextpoint.y, this.current)
+      this.current = nextpoint;
 }
+
+
+
+turnRight(n) {
+  if (this.distance < this.distanceThreshold) {
+    return;
+  }
+  var nextpoint = this.getNextPoint(this.direction)
+ // let leftDirection = { x: -this.direction.y, y: this.direction.x };
+  n.prev = null;
+  var degrees = 10
+  var radians = -degrees * (Math.PI/180)
+  var new_x = -this.direction.y
+  var new_y = this.direction.x 
+  this.direction = {x: new_x, y: new_y};
+  nextpoint = this.getNextPoint(this.direction)
+  var new_n = new node(nextpoint.x, nextpoint.y, n)
+  this.distance = this.distance1(nextpoint, this.end)
+  this.current = nextpoint;
+  return this.move(new_n);
+
+}
+
 isInsideObstacle(n, obstacle) {
   var x = n.x;
   var y = n.y
@@ -71,13 +117,11 @@ isInsideObstacle(n, obstacle) {
   return inside;
 }
 findClosestObstacle(n) {
-  var closest;
-  for (var obstacle = 0; obstacle < this.obstacles.length - 1; obstacle++) {
-    if (this.calculateDistance(n, this.obstacles[obstacle] < this.distanceThreshold)) {
-      closest = this.obstacles[obstacle]
+  for (let obstacle in this.obstacles) {
+    for (let i = 0; i < obstacle.length; i++) {
+
     }
-}
-return closest;
+  }
 }
 
 extractPath(n) {
@@ -92,7 +136,10 @@ extractPath(n) {
     return path;
 }
 
-move (n) {        
+move(n) {     
+  this.distance = this.distance1(this.end, n)
+  this.direction = {x: this.end.x - n.x, y: this.end.y - n.y}
+  this.current = n;   
     this.T.insert(n);
     let left = [n.getX(), n.getY()];
     if (this.distance1(left, this.end) < 0.5 ) {

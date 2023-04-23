@@ -22,7 +22,7 @@ class Bug1 {
 getNextPoint(direction) {
     return {x: this.current.x + (direction.x / this.stepSize), y: this.current.y + (direction.y/this.stepSize)};
 }
-towardGoal() {
+forward() {
   // move in a straight line towards the goal
   if (this.distance < this.distanceThreshold) {
     return;
@@ -33,6 +33,18 @@ towardGoal() {
   this.current = nextpoint;
   return new_n;
 
+}
+collide(n) {
+    var left = n;
+    n = n.prev
+    return(wallfollow(n, left))
+}
+wallfollow(n, left) {
+    // change direction
+    //check if left collides
+    // check if it's closer than previous
+    // keep going around obstacle, then move back to previous
+    
 }
 
 calculateDistance(current, goal) {

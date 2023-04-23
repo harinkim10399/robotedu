@@ -241,7 +241,9 @@ class HomePage extends React.Component {
     return (<div class="center">
       <p>Welcome to the Interactive Robotics Education Tool! This web application is designed to help visualize some important robotics concepts through hands-on manipulation.
         To begin, click on the Navbar above either on "Pathfinding Algorithms" or on "Motion Models".
-        <br></br><br></br>Application developed by Avery Clark, Felimon Holland, Adam Nguyen, and Owen Zook for COMP523, Spring 2022. Visit our website for the project <a target="_blank" href="https://tarheels.live/comp523teaml/"><b>here</b></a></p>
+        <br></br><br></br>Application improved by Harin Kim, Alexandra Mossinghoff, Zuntue Pommerich, and Sarah Paschal for COMP523 Spring 2023. 
+         <br></br><br></br> Originally developed by Avery Clark, Felimon Holland, Adam Nguyen, and Owen Zook for COMP523, Spring 2022. Visit our website for the project <a target="_blank" href="https://tarheels.live/comp523teaml/"><b>here</b></a>
+         </p>
     </div>)
   }
 }
@@ -1017,11 +1019,12 @@ class Canvas extends React.Component {
     }
     //Does:  
     $('#resetBug0').click(function () {
-
+      play = false;
       context.clearRect(0, 0, cw, ch);
       bug0path = null;
       drawPolygons()
       drawGoalandStart();
+      play = false;
       
     });
     $('#stepBug0').click(function () {
@@ -1031,6 +1034,7 @@ class Canvas extends React.Component {
       step = false;
 
     });
+
     //Does: Detects red pixel and returns true if it is not red 
     function isOpenPixel(x, y) {
       var p = context.getImageData(x, y, 1, 1).data;
@@ -1095,23 +1099,22 @@ class Canvas extends React.Component {
       if (bug0path == null) {
         bug0path = new Bug0(AlgoStart, AlgoGoal, coordinates);
       }
-      var node = bug0path.towardGoal();
 
+      var node = bug0path.forward();
       //detects for collision
       var blocked = midpointCalc(node.prev.x, node.prev.y, node.x, node.y);
-
       drawNodesAndLine(node.prev.x, node.prev.y, node.x, node.y, blocked);
 
-
       if (blocked == false) {
-        go = bug0path.wallFollow(node);
+        go = bug0path.collide(node);
         return go;
-      } else {
-
+      } 
         //if no collision
+        else {
         go = bug0path.move(node);
         return go;
-      }
+        } 
+      
       
     }
   
@@ -1139,7 +1142,8 @@ class Canvas extends React.Component {
       if (!step && !isBlocked) {
         return;
       }
-      var nodeColor = `rgb(0, 255, 0)`;
+
+      var nodeColor = `rgb(0, 0, 255)`;
       var lineColor = `rgb(0, 0, 255)`;
       if (!isBlocked) {
         nodeColor = `rgb(255, 0, 255)`;
@@ -1226,6 +1230,7 @@ class Canvas extends React.Component {
 
     //Does: deletes all obstacles
     $('#delete').click(function () {
+      play = false;
       context.clearRect(0, 0, cw, ch);
       drawGoalandStart()
     });
@@ -1654,6 +1659,7 @@ class Canvas extends React.Component {
 
     //Does: deletes all obstacles
     $('#delete').click(function () {
+      play = false;
       context.clearRect(0, 0, cw, ch);
       drawGoalandStart()
     });
@@ -1905,9 +1911,6 @@ class Canvas extends React.Component {
       step = false;
 
     });
-    $('#mlineBug2').click(function () {
-      play = false;
-    })
     //Does: Detects red pixel and returns true if it is not red 
     function isOpenPixel(x, y) {
       var p = context.getImageData(x, y, 1, 1).data;
@@ -2563,8 +2566,9 @@ class LowerControlUI extends React.Component {
           <div>
             <button id="playBug0"><img width="25" height="25" src="https://media.istockphoto.com/vectors/vector-play-button-icon-vector-id1066846868?k=20&m=1066846868&s=612x612&w=0&h=BikDjIPuOmb08aDFeDiEwDiKosX7EgnvtdQyLUvb3eA="></img></button>
             <button id="pauseBug0"><img width="40" height="25" src="data:image/png;base64,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"></img></button>
-            <button id="stepBug0">1 Step</button>
             <button id="resetBug0">Reset</button>
+            <button id="stepBug0">1 Step</button>
+
           </div>
         </div>)
     }
