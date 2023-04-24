@@ -272,8 +272,8 @@ class Navbar extends React.Component {
               <ul class="dropdown-menu">
                 <li><a href="#Algorithm_1" onClick={this.togglePage} name="RET">Rapidly Exploring Random Trees</a></li>
                 <li><a href="#Algorithm_2" onClick={this.togglePage} name="Bug0">Bug 0</a></li>
-                <li><a href="#Algorithm_3" onClick={this.togglePage} name="Bug1">Bug 1</a></li>
-                <li><a href="#Algorithm_4" onClick={this.togglePage} name="Bug2">Bug 2</a></li>
+                {/* <li><a href="#Algorithm_3" onClick={this.togglePage} name="Bug1">Bug 1</a></li>
+                <li><a href="#Algorithm_4" onClick={this.togglePage} name="Bug2">Bug 2</a></li> */}
               </ul>
             </li>
             <li class="dropdown">
@@ -345,6 +345,7 @@ class Canvas extends React.Component {
     var setGoal = false;
     var goalCoord;
     var setStart = false;
+    var setObstacle = false;
     var startCoord;
 
     //set values for playing
@@ -374,11 +375,16 @@ class Canvas extends React.Component {
     $('#goal').click(function () {
       setGoal = true;
       setStart = false;
+      setObstacle = false;
     });
 
     $('#start').click(function () {
       setStart = true;
       setGoal = false;
+      setObstacle = false;
+    });
+    $('#obstacle').click(function() {
+      setObstacle = true;
     });
     //Does: handles when cavas is clicked
     //Do: make conditions for goal and start
@@ -387,7 +393,7 @@ class Canvas extends React.Component {
         placeStart(e);
       } else if (setGoal) {
         placeGoal(e);
-      } else {
+      } else if (setObstacle){
         drawObstacle(e);
       }
     });
@@ -790,7 +796,7 @@ class Canvas extends React.Component {
     var goalCoord;
     var setStart = false;
     var startCoord;
-
+    var setObstacle = false;
     //set values for playing
     var play = false;
     let bug0path = null;
@@ -818,11 +824,16 @@ class Canvas extends React.Component {
     $('#goal').click(function () {
       setGoal = true;
       setStart = false;
+      setObstacle = false;
     });
 
     $('#start').click(function () {
       setStart = true;
       setGoal = false;
+      setObstacle = false;
+    });
+    $('#obstacle').click(function() {
+      setObstacle = true;
     });
     //Does: handles when canvas is clicked
     //Do: make conditions for goal and start
@@ -831,8 +842,9 @@ class Canvas extends React.Component {
         placeStart(e);
       } else if (setGoal) {
         placeGoal(e);
-      } else {
+      } else if (setObstacle) {
         drawObstacle(e);
+      } else {
       }
     });
     function placeStart(e) {
@@ -897,6 +909,9 @@ class Canvas extends React.Component {
       if (coordinates[isDone].length == 1) {
         context.beginPath();
         context.moveTo(mouseX, mouseY);
+        context.strokeStyle = 'red';
+        context.stroke();
+
       } else {
         context.lineWidth = 10;
         //Check distance and snap if close enough to start
@@ -934,9 +949,7 @@ class Canvas extends React.Component {
         context.beginPath();
 
         context.moveTo(coordinates[obstacle][0].x, coordinates[obstacle][0].y);
-        context.arc(coordinates[obstacle][0].x, coordinates[obstacle][0].y, 3, 0, 2 * Math.PI);
         for (var index = 1; index < coordinates[obstacle].length; index++) {
-          context.arc(coordinates[obstacle][index].x, coordinates[obstacle][index].y, 3, 0, 2 * Math.PI);
           context.lineTo(coordinates[obstacle][index].x, coordinates[obstacle][index].y);
         }
         context.closePath();
@@ -1209,6 +1222,7 @@ class Canvas extends React.Component {
     var setGoal = false;
     var goalCoord;
     var setStart = false;
+    var setObstacle = false;
     var startCoord;
 
     //set values for playing
@@ -1239,11 +1253,16 @@ class Canvas extends React.Component {
     $('#goal').click(function () {
       setGoal = true;
       setStart = false;
+      setObstacle = false;
     });
 
     $('#start').click(function () {
       setStart = true;
       setGoal = false;
+      setObstacle = false;
+    });
+    $('#obstacle').click(function() {
+      setObstacle = true;
     });
     //Does: handles when cavas is clicked
     //Do: make conditions for goal and start
@@ -1252,7 +1271,7 @@ class Canvas extends React.Component {
         placeStart(e);
       } else if (setGoal) {
         placeGoal(e);
-      } else {
+      } else if (setObstacle) {
         drawObstacle(e);
       }
     });
@@ -1638,6 +1657,7 @@ class Canvas extends React.Component {
     var setGoal = false;
     var goalCoord;
     var setStart = false;
+    var setObstacle = false;
     var startCoord;
 
     //set values for playing
@@ -1668,11 +1688,16 @@ class Canvas extends React.Component {
     $('#goal').click(function () {
       setGoal = true;
       setStart = false;
+      setObstacle = false;
     });
 
     $('#start').click(function () {
       setStart = true;
       setGoal = false;
+      setObstacle = false;
+    });
+    $('#obstacle').click(function() {
+      setObstacle = true;
     });
     //Does: handles when cavas is clicked
     //Do: make conditions for goal and start
@@ -1681,7 +1706,7 @@ class Canvas extends React.Component {
         placeStart(e);
       } else if (setGoal) {
         placeGoal(e);
-      } else {
+      } else if (setObstacle) {
         drawObstacle(e);
       }
     });
@@ -2788,11 +2813,13 @@ class RightDrawingUI extends React.Component {
     return (<div id="rightDrawingUI">
       Drawing UI
       <div>
-        <button id="clear">Click to clear all obstacles</button>
+        <button id="start">Click to set start</button>
         <br></br>
         <button id="goal">Click to set goal</button>
         <br></br>
-        <button id="start">Click to set start</button>
+        <button id = "obstacle"> Click to set obstacle points </button>
+        <br></br>
+        <button id="clear">Click to clear all obstacles</button>
       </div>
     </div>)
   }
@@ -2830,10 +2857,10 @@ class Footer extends React.Component {
         You can pause or reset (clear the canvas of all things) the algorithm at any point.
         If you want to head back to the home page, you can click
         the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> or <strong>"Path Planning"</strong> in the Navbar to explore other parts of the IRET.</p></div>)
-      case 'Bug1':
-        return ( <div id="foot"> How to get started with Bug 1</div>)
-      case 'Bug2':
-        return (<div> id="foot" How to get started with Bug 2</div>)
+      // case 'Bug1':
+      //   return ( <div id="foot"> How to get started with Bug 1</div>)
+      // case 'Bug2':
+      //   return (<div id="foot"> How to get started with Bug 2</div>)
     }
   }
 }
