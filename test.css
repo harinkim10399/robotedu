@@ -15,6 +15,22 @@ body {
   background-color: black;
 }
 
+h1 {
+  text-align: left;
+  font-weight:800;
+  font-size: 15px;
+}
+
+ul { 
+	/* display: inline-block;  */
+	text-align: left; 
+}
+
+ol {
+  /* display: inline-block;  */
+	text-align: left;
+}
+
 button {
   padding: 10px;
   margin: 10px;
@@ -160,7 +176,7 @@ button {
     margin: 0;
     display: grid;
     grid-template-columns: 100vw;
-    grid-template-rows: 35vh 65vh auto auto auto;
+    grid-template-rows: auto auto 65vh auto auto;
     
   }
   #naving {
