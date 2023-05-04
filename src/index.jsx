@@ -2962,9 +2962,51 @@ class Footer extends React.Component {
         <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
         </div>)
       // case 'Bug1':
-      //   return ( <div id="foot"> How to get started with Bug 1</div>)
+      //   return (<div id="foot"><h1>How to get started</h1> 
+      //   <ol>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET START"</strong> AND LAY DOWN A START MARKER (COLORED PINK) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET GOAL"</strong> AND SET DOWN A GOAL MARKER (COLORED GREEN) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>“CLICK TO SET OBSTACLE POINTS”</strong> TO DRAW ARBITRARY OBSTACLES ON THE CANVAS BY CLICKING ON THE CANVAS ITSELF, MOVING YOUR CURSOR TO A DIFFERENT LOCATION ON THE CANVAS, AND THEN CLICKING ON THAT LOCATION.</li>
+      //     <ul>
+      //       <li>BY CLCKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
+      //       <li>YOU ARE ABLE TO REPEAT THIS STEP UNTIL SATISFIED.</li>
+      //     </ul>          
+      //     <li>CLICK THE PLAY BUTTON IN THE COMPONENT LABELED <strong>"SIMULATION CONTROL"</strong> TO WATCH BUG1 DO ITS MAGIC.</li>
+      //   </ol>
+      //   <ul>
+      //     <li>OTHER TIPS:</li>
+      //     <ul>
+      //       <li>CLICK THE BUTTON LABELED <strong>“CLICK TO CLEAR ALL OBSTACLES”</strong> IF YOU WISH TO ERASE WHAT HAS BEEN DRAWN ON THE PAGE.</li>
+      //       <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+      //       <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO RESTART THE PROCESS.</li>
+      //     </ul>
+      //   </ul><br></br>
+      //   <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+      //   <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+      //   </div>)
       // case 'Bug2':
-      //   return (<div id="foot"> How to get started with Bug 2</div>)
+      //   return (<div id="foot"><h1>How to get started</h1> 
+      //   <ol>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET START"</strong> AND LAY DOWN A START MARKER (COLORED PINK) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET GOAL"</strong> AND SET DOWN A GOAL MARKER (COLORED GREEN) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>“CLICK TO SET OBSTACLE POINTS”</strong> TO DRAW ARBITRARY OBSTACLES ON THE CANVAS BY CLICKING ON THE CANVAS ITSELF, MOVING YOUR CURSOR TO A DIFFERENT LOCATION ON THE CANVAS, AND THEN CLICKING ON THAT LOCATION.</li>
+      //     <ul>
+      //       <li>BY CLCKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
+      //       <li>YOU ARE ABLE TO REPEAT THIS STEP UNTIL SATISFIED.</li>
+      //     </ul>          
+      //     <li>CLICK THE PLAY BUTTON IN THE COMPONENT LABELED <strong>"SIMULATION CONTROL"</strong> TO WATCH BUG2 DO ITS MAGIC.</li>
+      //   </ol>
+      //   <ul>
+      //     <li>OTHER TIPS:</li>
+      //     <ul>
+      //       <li>CLICK THE BUTTON LABELED <strong>“CLICK TO CLEAR ALL OBSTACLES”</strong> IF YOU WISH TO ERASE WHAT HAS BEEN DRAWN ON THE PAGE.</li>
+      //       <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+      //       <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO RESTART THE PROCESS.</li>
+      //     </ul>
+      //   </ul><br></br>
+      //   <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+      //   <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+      //   </div>)
     }
   }
 }
