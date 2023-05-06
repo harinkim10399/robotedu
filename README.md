@@ -7,10 +7,15 @@ Many demonstrations and explanations of robotics concepts operate at a much high
 
 As part of the tool framework, there are visualizations that focus on pathfinding algorithms and motion planning. The interfaces will allow users to control their environment and manipulate parameters that affect overall performance of the algorithm or movements at hand. In seeing the performance in real time, the users can identify the importance of chosen parameters and how they affect the robot in question. Expanding upon what was built by the previous team, we will further implement the functionality of creating visualizations of bug algorithms and PID controllers, as well as allowing the tool to be added directly to an instructor’s website.
 
-## Setup
+## Local Setup
 1. Clone this repository<br>
 ```git clone https://github.com/zuntue/robotedu.git```
-2. 
+2. Move into the repo directory<br>
+```cd robotedu```
+3. Install required dependencies<br>
+```npm install```
+4. Disply the web app locally<br>
+```npm start```
 
 ## Notes
-Everything is still in development, and the README will be updated accordingly.
+IRET was developed to be implemented into a pre-existing website (https://robotics.cs.unc.edu/index.html). For a complete description of the project, checkout our website at https://tarheels.live/comp523sp23teamh/.
