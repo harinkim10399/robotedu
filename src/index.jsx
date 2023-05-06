@@ -240,9 +240,9 @@ class HomePage extends React.Component {
   render() {
     return (<div class="center">
       <p>Welcome to the Interactive Robotics Education Tool! This web application is designed to help visualize some important robotics concepts through hands-on manipulation.
-        To begin, click on the Navbar above either on "Pathfinding Algorithms" or on "Motion Models".
-        <br></br><br></br>Application improved by Harin Kim, Alexandra Mossinghoff, Zuntue Pommerich, and Sarah Paschal for COMP523 Spring 2023. 
-         <br></br><br></br> Originally developed by Avery Clark, Felimon Holland, Adam Nguyen, and Owen Zook for COMP523, Spring 2022. Visit our website for the project <a target="_blank" href="https://tarheels.live/comp523teaml/"><b>here</b></a>
+        To begin, click on either "Pathfinding Algorithms" or "Motion Models" on the above navigation bar.
+        <br></br><br></br>Application improved by Harin Kim, Alexandra Mossinghoff, Zuntue Pommerich, and Sarah Paschal for COMP523 Spring 2023. Visit our website for the project <a target="_blank" href="https://tarheels.live/comp523sp23teamh/"><b>here</b></a>.
+         <br></br><br></br> Originally developed by Avery Clark, Felimon Holland, Adam Nguyen, and Owen Zook for COMP523 Spring 2022. Visit our website for the project <a target="_blank" href="https://tarheels.live/comp523teaml/"><b>here</b></a>.
          </p>
     </div>)
   }
@@ -2829,38 +2829,184 @@ class Footer extends React.Component {
   render() {
     switch (this.props.jQuery) {
       case 'RET':
-        return (<div id="foot">How to get started <br></br><br></br><p>To get started, click on the button labeled <strong>"Click to set start"</strong> and lay down a start marker (colored blue) on the canvas. Then, click the button labeled <strong>"Click to set goal"</strong> and set down a goal marker (colored green) on the canvas. Finally, you can draw arbitrary obstacles on the canvas by clicking on the canvas itself and moving your cursor and clicking on another point in the canvas. After you have finished drawing arbitrary obstacles on the canvas, click the play button in the component labeled <strong>"Simulation Control"</strong> to watch RRT do its magic. During the running of RRT, you can pause it, reset it (clear the canvas of all things), or hit the <strong>"1 step"</strong> button.
-          This will slow down execution of RRT to only one iteration at a time. You can continue clicking <strong>"1 Step"</strong> after this point or clicking the play button. <strong>Note that after the optimal path is found, you can continue to run the algorithm by hitting the play button or the 1 Step button.</strong> Remember, at any time if you feel like heading back to the home page, you can click
-          the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore other parts of the IRET.</p></div>)
+        return (<div id="foot"><h1>How to get started</h1>
+        <ol>
+          <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET START"</strong> AND LAY DOWN A START MARKER (COLORED BLUE) ON THE CANVAS.</li>
+          <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET GOAL"</strong> AND SET DOWN A GOAL MARKER (COLORED GREEN) ON THE CANVAS.</li>
+          <li>CLICK THE BUTTON LABELED <strong>“CLICK TO SET OBSTACLE POINTS”</strong> TO DRAW ARBITRARY OBSTACLES ON THE CANVAS BY CLICKING ON THE CANVAS ITSELF, MOVING YOUR CURSOR TO A DIFFERENT LOCATION ON THE CANVAS, AND THEN CLICKING ON THAT LOCATION.</li>
+          <ul>
+            <li>BY CLCKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
+            <li>YOU ARE ABLE TO REPEAT THIS STEP UNTIL SATISFIED.</li>
+          </ul>
+          <li>CLICK THE PLAY BUTTON IN THE COMPONENT LABELED <strong>"SIMULATION CONTROL"</strong> TO WATCH RRT DO ITS MAGIC.</li>
+        </ol>
+        <ul>
+          <li>OTHER TIPS:</li>
+          <ul>
+            <li>CLICK THE BUTTON LABELED <strong>“CLICK TO CLEAR ALL OBSTACLES”</strong> IF YOU WISH TO ERASE WHAT HAS BEEN DRAWN ON THE PAGE.</li>
+            <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+            <li>CLICK THE BUTTON LABELED <strong>“1 STEP”</strong> TO SLOW DOWN EXECUTION OF RRT TO ONLY ONE ITERATION AT A TIME.</li>
+              <ul>
+                <li>YOU CAN CONTINUE CLICKING TO KEEP STEPPING THROUGH, OR YOU CAN PRESS THE PLAY BUTTON AND THE PROCESS WILL CONTINUE FROM ITS CURRENT POSITION.</li>
+              </ul>
+            <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO RESTART THE PROCESS.</li>
+          </ul>
+        </ul><br></br>
+        <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+        <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+        </div>)
         break;
       case 'Diff. Drive':
-        return (<div id="foot">How to get started <br></br><br></br><p>To get started, enter valid numbers into all of the inputs you see on the screen. Any number not in the bounds listed beside the label of each input is invalid and will be ignored and will not factor into the rendering of the motion model. In addition, the motion model will not run until you have entered valid numbers into all of the inputs.
-          In addition, you can also play (effect will take place only after you have hit the pause button) the running of the motion model, you can pause it, and you can reset it in the component labeled <strong>"Simulation Control"</strong>. Keep in mind that by hitting the <strong>"Reset"</strong> button you will erase what's on the canvas and will reset all parameters to 0.
-          Remember, at any time if you feel like heading back to the home page, you can click
-          the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore the Bicycle and Tricycle Motion Models or <strong>"Pathfinding Algorithm"</strong> to explore RRT. <strong>Finally, note that your motion model will stop once it hits the edge of the canvas.</strong></p> <p>Another thing to note is that the right wheel starts towards the bottom of the screen for differential drive whereas the left wheel starts towards the top</p></div>)
+        return (<div id="foot"><h1>How to get started</h1> 
+        <ol>
+          <li>ENTER VALID NUMBERS INTO THE INPUT BOXES FOR EACH OF THE PARAMETERS LISTED ON THE SCREEN.</li>
+          <ul>
+            <li>ANY NUMBER NOT IN THE BOUNDS LISTED BESIDE THE LABEL OF EACH INPUT IS INVALID. IT WILL BE IGNORED AND WILL NOT FACTOR INTO THE RENDERING OF THE MOTION MODEL.</li>
+          </ul>
+          <li>ONCE THERE ARE VALID NUMBERS IN EACH OF THE INPUTS, THE MOTION MODEL WILL AUTOMATICALLY START RUNNING.</li>
+        </ol>
+        <ul>
+          <li>OTHER TIPS:</li>
+          <ul>
+            <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+            <li>CLICK THE BUTTON WITH THE PLAY SYMBOL TO RESUME MOTION AFTER USING THE PAUSE BUTTON.</li>
+            <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO CLEAR THE CANVAS AND SET ALL PARAMETER VALUES BACK TO 0.</li>
+          </ul>
+        </ul>
+        <ul>
+          <li>THINGS TO NOTE:</li>
+          <ul>
+            <li>FOR DIFFERENTIAL DRIVE, THE RIGHT WHEEL STARTS TOWARDS THE BOTTOM OF THE SCREEN WHEREAS THE LEFT WHEEL STARTS TOWARDS THE TOP.</li>
+            <li>YOUR MOTION MODEL WILL STOP ONCE IT HITS THE EDGE OF THE CANVAS.</li>
+          </ul>
+        </ul><br></br>
+        <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+        <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+        </div>)
         break;
       case 'Bicycle':
-        return (<div id="foot">How to get started <br></br><br></br><p>To get started, enter valid numbers into all of the inputs you see on the screen. Any number not in the bounds listed beside the label of each input will be ignored and will not factor into the rendering of the motion model. In addition, the motion model will not run until you have entered valid numbers into all of the inputs.
-          In addition, you can also play (effect will take place only after you have hit the pause button) the running of the motion model, you can pause it, and you can reset it in the component labeled <strong>"Simulation Control"</strong>. Keep in mind that by hitting the <strong>"Reset"</strong> button you will erase what's on the canvas and will reset all parameters to 0.
-          Remember, at any time if you feel like heading back to the home page, you can click
-          the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore the Differential Drive and Tricycle Motion Models or <strong>"Pathfinding Algorithm"</strong> to explore RRT. <strong>Finally, note that your motion model will stop once it hits the edge of the canvas.</strong> </p></div>)
+        return (<div id="foot"><h1>How to get started</h1>
+        <ol>
+          <li>ENTER VALID NUMBERS INTO THE INPUT BOXES FOR EACH OF THE PARAMETERS LISTED ON THE SCREEN.</li>
+          <ul>
+            <li>ANY NUMBER NOT IN THE BOUNDS LISTED BESIDE THE LABEL OF EACH INPUT IS INVALID. IT WILL BE IGNORED AND WILL NOT FACTOR INTO THE RENDERING OF THE MOTION MODEL.</li>
+          </ul>
+          <li>ONCE THERE ARE VALID NUMBERS IN EACH OF THE INPUTS, THE MOTION MODEL WILL AUTOMATICALLY START RUNNING.</li>
+        </ol>
+        <ul>
+          <li>OTHER TIPS:</li>
+          <ul>
+            <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+            <li>CLICK THE BUTTON WITH THE PLAY SYMBOL TO RESUME MOTION AFTER USING THE PAUSE BUTTON.</li>
+            <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO CLEAR THE CANVAS AND SET ALL PARAMETER VALUES BACK TO 0.</li>
+          </ul>
+        </ul>
+        <ul>
+          <li>THINGS TO NOTE:</li>
+          <ul>
+            <li>YOUR MOTION MODEL WILL STOP ONCE IT HITS THE EDGE OF THE CANVAS.</li>
+          </ul>
+        </ul><br></br>
+        <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+        <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+        </div>)
         break;
       case 'Tricycle':
-        return (<div id="foot">How to get started <br></br><br></br><p>To get started, enter valid numbers into all of the inputs you see on the screen. Any number not in the bounds listed beside the label of each input will be ignored and will not factor into the rendering of the motion model. In addition, the motion model will not run until you have entered valid numbers into all of the inputs.
-          In addition, you can also play (effect will take place only after you have hit the pause button) the running of the motion model, you can pause it, and you can reset it in the component labeled <strong>"Simulation Control"</strong>. Keep in mind that by hitting the <strong>"Reset"</strong> button you will erase what's on the canvas and will reset all parameters to 0.
-          Remember, at any time if you feel like heading back to the home page, you can click
-          the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> in the Navbar to explore the Differential Drive and Bicycle Motion Models or <strong>"Pathfinding Algorithm"</strong> to explore RRT. <strong>Finally, note that your motion model will stop once it hits the edge of the canvas.</strong></p></div>)
+        return (<div id="foot"><h1>How to get started</h1>
+        <ol>
+          <li>ENTER VALID NUMBERS INTO THE INPUT BOXES FOR EACH OF THE PARAMETERS LISTED ON THE SCREEN.</li>
+          <ul>
+            <li>ANY NUMBER NOT IN THE BOUNDS LISTED BESIDE THE LABEL OF EACH INPUT IS INVALID. IT WILL BE IGNORED AND WILL NOT FACTOR INTO THE RENDERING OF THE MOTION MODEL.</li>
+          </ul>
+          <li>ONCE THERE ARE VALID NUMBERS IN EACH OF THE INPUTS, THE MOTION MODEL WILL AUTOMATICALLY START RUNNING.</li>
+        </ol>
+        <ul>
+          <li>OTHER TIPS:</li>
+          <ul>
+            <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+            <li>CLICK THE BUTTON WITH THE PLAY SYMBOL TO RESUME MOTION AFTER USING THE PAUSE BUTTON.</li>
+            <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO CLEAR THE CANVAS AND SET ALL PARAMETER VALUES BACK TO 0.</li>
+          </ul>
+        </ul>
+        <ul>
+          <li>THINGS TO NOTE:</li>
+          <ul>
+            <li>YOUR MOTION MODEL WILL STOP ONCE IT HITS THE EDGE OF THE CANVAS.</li>
+          </ul>
+        </ul><br></br>
+        <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+        <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+        </div>)
         break;
       case 'Bug0':
-        return (<div id="foot">How to get started <br></br><br></br><p>To get started, click on the button labeled <strong>"Click to set start"</strong> and put down a start marker (colored pink) on the canvas. Then, click the button labeled <strong>"Click to set goal"</strong> and set down a goal marker (colored green) on the canvas. Finally, you can draw obstacles on the canvas by clicking on the canvas itself and moving your cursor and clicking on another point in the canvas. 
-        After you have finished drawing arbitrary obstacles on the canvas, click the play button in the component labeled <strong>"Simulation Control"</strong> to watch Bug0 work its magic. 
-        You can pause or reset (clear the canvas of all things) the algorithm at any point.
-        If you want to head back to the home page, you can click
-        the title <strong>"Interactive Robotics Education Tool"</strong>. Otherwise, click on <strong>"Motion Models"</strong> or <strong>"Path Planning"</strong> in the Navbar to explore other parts of the IRET.</p></div>)
+        return (<div id="foot"><h1>How to get started</h1> 
+        <ol>
+          <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET START"</strong> AND LAY DOWN A START MARKER (COLORED PINK) ON THE CANVAS.</li>
+          <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET GOAL"</strong> AND SET DOWN A GOAL MARKER (COLORED GREEN) ON THE CANVAS.</li>
+          <li>CLICK THE BUTTON LABELED <strong>“CLICK TO SET OBSTACLE POINTS”</strong> TO DRAW ARBITRARY OBSTACLES ON THE CANVAS BY CLICKING ON THE CANVAS ITSELF, MOVING YOUR CURSOR TO A DIFFERENT LOCATION ON THE CANVAS, AND THEN CLICKING ON THAT LOCATION.</li>
+          <ul>
+            <li>BY CLCKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
+            <li>YOU ARE ABLE TO REPEAT THIS STEP UNTIL SATISFIED.</li>
+          </ul>          
+          <li>CLICK THE PLAY BUTTON IN THE COMPONENT LABELED <strong>"SIMULATION CONTROL"</strong> TO WATCH BUG0 DO ITS MAGIC.</li>
+        </ol>
+        <ul>
+          <li>OTHER TIPS:</li>
+          <ul>
+            <li>CLICK THE BUTTON LABELED <strong>“CLICK TO CLEAR ALL OBSTACLES”</strong> IF YOU WISH TO ERASE WHAT HAS BEEN DRAWN ON THE PAGE.</li>
+            <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+            <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO RESTART THE PROCESS.</li>
+          </ul>
+        </ul><br></br>
+        <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+        <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+        </div>)
       // case 'Bug1':
-      //   return ( <div id="foot"> How to get started with Bug 1</div>)
+      //   return (<div id="foot"><h1>How to get started</h1> 
+      //   <ol>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET START"</strong> AND LAY DOWN A START MARKER (COLORED PINK) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET GOAL"</strong> AND SET DOWN A GOAL MARKER (COLORED GREEN) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>“CLICK TO SET OBSTACLE POINTS”</strong> TO DRAW ARBITRARY OBSTACLES ON THE CANVAS BY CLICKING ON THE CANVAS ITSELF, MOVING YOUR CURSOR TO A DIFFERENT LOCATION ON THE CANVAS, AND THEN CLICKING ON THAT LOCATION.</li>
+      //     <ul>
+      //       <li>BY CLCKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
+      //       <li>YOU ARE ABLE TO REPEAT THIS STEP UNTIL SATISFIED.</li>
+      //     </ul>          
+      //     <li>CLICK THE PLAY BUTTON IN THE COMPONENT LABELED <strong>"SIMULATION CONTROL"</strong> TO WATCH BUG1 DO ITS MAGIC.</li>
+      //   </ol>
+      //   <ul>
+      //     <li>OTHER TIPS:</li>
+      //     <ul>
+      //       <li>CLICK THE BUTTON LABELED <strong>“CLICK TO CLEAR ALL OBSTACLES”</strong> IF YOU WISH TO ERASE WHAT HAS BEEN DRAWN ON THE PAGE.</li>
+      //       <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+      //       <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO RESTART THE PROCESS.</li>
+      //     </ul>
+      //   </ul><br></br>
+      //   <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+      //   <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+      //   </div>)
       // case 'Bug2':
-      //   return (<div id="foot"> How to get started with Bug 2</div>)
+      //   return (<div id="foot"><h1>How to get started</h1> 
+      //   <ol>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET START"</strong> AND LAY DOWN A START MARKER (COLORED PINK) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET GOAL"</strong> AND SET DOWN A GOAL MARKER (COLORED GREEN) ON THE CANVAS.</li>
+      //     <li>CLICK THE BUTTON LABELED <strong>“CLICK TO SET OBSTACLE POINTS”</strong> TO DRAW ARBITRARY OBSTACLES ON THE CANVAS BY CLICKING ON THE CANVAS ITSELF, MOVING YOUR CURSOR TO A DIFFERENT LOCATION ON THE CANVAS, AND THEN CLICKING ON THAT LOCATION.</li>
+      //     <ul>
+      //       <li>BY CLCKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
+      //       <li>YOU ARE ABLE TO REPEAT THIS STEP UNTIL SATISFIED.</li>
+      //     </ul>          
+      //     <li>CLICK THE PLAY BUTTON IN THE COMPONENT LABELED <strong>"SIMULATION CONTROL"</strong> TO WATCH BUG2 DO ITS MAGIC.</li>
+      //   </ol>
+      //   <ul>
+      //     <li>OTHER TIPS:</li>
+      //     <ul>
+      //       <li>CLICK THE BUTTON LABELED <strong>“CLICK TO CLEAR ALL OBSTACLES”</strong> IF YOU WISH TO ERASE WHAT HAS BEEN DRAWN ON THE PAGE.</li>
+      //       <li>CLICK THE BUTTON WITH THE PAUSE SYMBOL TO TEMPORARILY STOP THE PROCESS WHERE IT IS CURRENTLY AT.</li>
+      //       <li>CLICK THE BUTTON LABELED <strong>“RESET”</strong> TO RESTART THE PROCESS.</li>
+      //     </ul>
+      //   </ul><br></br>
+      //   <small>IF AT ANY TIME YOU WOULD LIKE TO RETURN TO THE HOME PAGE, CLICK THE TITLE <strong>“INTERACTIVE ROBOTICS EDUCATION TOOL”</strong>.</small><br></br>
+      //   <small>IF YOU WOULD LIKE TO CONTINUE EXPLORING OTHER PARTS OF THIS TOOL, CLICK ON <strong>“PATH ALGORITHMS”</strong> OR <strong>“MOTION MODELS”</strong> IN THE NAVIGATION BAR.</small>
+      //   </div>)
     }
   }
 }
