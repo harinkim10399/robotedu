@@ -285,6 +285,13 @@ class Navbar extends React.Component {
                 <li><a href="#Model_3" onClick={this.togglePage} name="Tricycle">Tricycle</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">PID
+                  <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/src/PID/PID_testing.html">PID Controller</a></li>
+                </ul>
+            </li>
           </ul>
         </div>
       </nav>
