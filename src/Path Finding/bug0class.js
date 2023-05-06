@@ -47,19 +47,9 @@ collide(n) {
   
   var new_x = this.direction.x * Math.cos(thetarad) - this.direction.y* Math.sin(thetarad)
   var new_y = this.direction.x * Math.sin(thetarad) + this.direction.y* Math.cos(thetarad)
+  
   this.direction = {x: new_x, y: new_y}
   this.stepsize *= 0.95
-   // increases step size if it gets too small, helpful when there are multiple obstacles
-//  if((this.direction.x / this.stepSize) > (this.direction.y / this.stepSize)) {
-//   if((this.direction.x / this.stepSize) < 2) {
-//     this.stepSize *= 0.85
-// }
-// } else if ((this.direction.x / this.stepSize) < (this.direction.y / this.stepSize)) {
-// if((this.direction.y / this.stepSize) < 2) {
-//   this.stepSize *= 0.85
-// }
-// }
-
   this.current = n;
   
   return "again";

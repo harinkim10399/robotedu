@@ -19,6 +19,8 @@ class Bug1 {
         this.distance = Math.sqrt((this.end.x - this.current.x) ** 2 + (this.end.y - this.current.y) ** 2)
         this.direction_change = 10
       }
+// Most code in this file is based on Bug0, and doesn't actually work. The wallFollow() and isInsideObstacle() functions
+// are frameworks that show the thought process behind making this work with the already existing code.
 getNextPoint(direction) {
     return {x: this.current.x + (direction.x / this.stepSize), y: this.current.y + (direction.y/this.stepSize)};
 }
@@ -51,20 +53,6 @@ calculateDistance(current, goal) {
   return Math.sqrt((goal.x - current.x) ** 2 + (goal.y - current.y) ** 2);
 }
 
-wallFollow(n) {
-    var obstacle = this.findClosestObstacle(n)
-    // while the obstacle isn't next to you, keep changing the direction
-    var totheleft = {x: -this.direction.x, y: this.direction.y}
-    var leftpt = this.getNextPoint(totheleft)
-    // while (!this.isInsideObstacle(leftpt, obstacle)) {
-    //   //add to the x, subtract from the Y since we're turning to the left
-    //   this.direction.x += this.direction_change;
-    //   this.direction.y -= this.direction_change;
-    // }
-    var nextpoint = this.getNextPoint(this.direction)
-    var new_n = new node(leftpt.x, leftpt.y, this.current)
-    return new_n;
-}
 isInsideObstacle(n, obstacle) {
   var x = n.x;
   var y = n.y
@@ -82,6 +70,7 @@ isInsideObstacle(n, obstacle) {
   }
   return inside;
 }
+
 findClosestObstacle(n) {
   var closest;
   for (var obstacle = 0; obstacle < this.obstacles.length - 1; obstacle++) {

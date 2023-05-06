@@ -1174,7 +1174,7 @@ class Canvas extends React.Component {
     }
   }
 
-
+// Currently, bug1's algorithm is implemented identically to bug0. It needs a proper wall-following method in order for it to work.
   jQueryCodeBug1 = () => {
     //Does: Creates canvas based off screen size
     function establishCanvas() {
@@ -1537,7 +1537,7 @@ class Canvas extends React.Component {
       if (bug1path == null) {
         bug1path = new Bug1(AlgoStart, AlgoGoal, coordinates);
       }
-      var node = bug1path.towardGoal();
+      var node = bug1path.forward();
 
       //detects for collision
       var blocked = midpointCalc(node.prev.x, node.prev.y, node.x, node.y);
@@ -1610,6 +1610,7 @@ class Canvas extends React.Component {
 
     }
   }
+
   jQueryCodeBug2 = () => {
     //Does: Creates canvas based off screen size
     function establishCanvas() {
@@ -1632,7 +1633,7 @@ class Canvas extends React.Component {
 
     establishCanvas()
     var canvas = document.getElementById("canvas");
-    document.getElementById("canvas").style.backgroundColor = "#e6edee";
+    document.getElementById("canvas").style.backgroundColor = "white";
     var context = canvas.getContext("2d");
     var cw = canvas.width;
     var ch = canvas.height;
@@ -1761,6 +1762,7 @@ class Canvas extends React.Component {
       context.fill()
       goalCoord = { x: mouseX, y: mouseY };
       setGoal = false;
+      drawMLine();
     };
     function drawObstacle(e) {
       // Does: tell the browser we're handling this event
@@ -1832,6 +1834,7 @@ class Canvas extends React.Component {
         context.strokeStyle = 'green';
         context.stroke();
         context.fill();
+        drawMLine();
 
       }
 
@@ -1846,15 +1849,13 @@ class Canvas extends React.Component {
       return;
     }
     function drawMLine() {
-      context.lineWidth = 2;
+      context.lineWidth = 6;
       if (goalCoord != null && startCoord != null) {
         context.beginPath();
-        context.setLineDash([5, 15]);
         context.moveTo(startCoord.x, startCoord.y);
         context.lineTo(goalCoord.x, goalCoord.y);
-        context.strokeStyle = 'mediumpurple';
+        context.strokeStyle = "rgb(0, 255, 0)";
         context.stroke();
-        context.setLineDash([]);
       }
     }
     //Does: Plays algo
@@ -1871,10 +1872,7 @@ class Canvas extends React.Component {
       play = false;
 
     });
-    $('#drawMLine').click(function () {
-      play = false;
-      drawMLine();
-    })
+
     //recursive play for time delay
     function playAlgo(go) {
       if (play) {
@@ -1913,9 +1911,12 @@ class Canvas extends React.Component {
 
       context.clearRect(0, 0, cw, ch);
       bug2path = null;
-      drawPolygons()
+      play = false;
       drawGoalandStart();
-      
+      drawMLine()
+      drawPolygons();
+      play = false;
+
     });
     $('#stepBug2').click(function () {
       play = false;
@@ -1934,8 +1935,36 @@ class Canvas extends React.Component {
         return true;
       }
     }
+    function isOnMLine(x, y) {
+      var p = context.getImageData(x, y, 1, 1).data;
+      if(p[1] != 255) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    function mLineMidpoint(sx, sy, ex, ey) {
+      //check distance
+      var a = ex - sx;
+      var b = ey - sy;
+      var c = Math.sqrt(a * a + b * b);
+      //return true if distance is within limit
+      if (c < 4) {
+        return false;
+      }
 
+      //get midpoint 
+      var midx = (ex + sx) / 2;
+      var midy = (ey + sy) / 2;
 
+      //if point there return false
+      if (isOnMLine(midx, midy)) {
+        return true;
+      }
+
+      // call function twice both with midpoints 
+      return (mLineMidpoint(sx, sy, midx, midy) && mLineMidpoint(midx, midy, ex, ey))
+    }
 
 
     //return if the distance is greater
@@ -1989,23 +2018,61 @@ class Canvas extends React.Component {
         bug2path = new Bug2(AlgoStart, AlgoGoal, coordinates);
       }
       
-      var node = bug2path.towardGoal();
+      var node = bug2path.forward();
 
       //detects for collision
       var blocked = midpointCalc(node.prev.x, node.prev.y, node.x, node.y);
-
-      drawNodesAndLine(node.prev.x, node.prev.y, node.x, node.y, blocked);
-
+      var mline = mLineMidpoint(node.prev.x, node.prev.y, node.x, node.y);
+     // var difference = {x: Math.abs(node.x - goalCoord.x), y: Math.abs(node.y - goalCoord.y)}
+     var leftnode = bug2path.get90Degrees()
+     var leftclear = midpointCalc(leftnode.prev.x, leftnode.prev.y, leftnode.x, leftnode.y)
+     drawNodesAndLine(node.prev.x, node.prev.y, node.x, node.y, blocked, mline, leftclear);
+      var addtopath = false;
 
       if (blocked == false) {
-        go = bug2path.wallFollow(node);
+        go = bug2path.collide(node);
         return go;
       } else {
-
         //if no collision
-        go = bug2path.move(node);
-        return go;
-      }
+        if(mline) {
+          addtopath = true
+          go = bug2path.move(node, mline, addtopath)
+          return go;
+        }
+        else {
+          if(leftclear) {
+                bug2path.wallFollow(node)
+               //var nextnode = bug2path.getNextPoint(orient)
+               var newleftnode = bug2path.get90Degrees()
+               
+               var newleftclear = midpointCalc(newleftnode.prev.x, newleftnode.prev.y, newleftnode.x, newleftnode.y)
+               drawNodesAndLine(node.prev.x, node.prev.y, node.x, node.y, blocked, mline, newleftclear);
+
+              if(!newleftclear) {
+                addtopath = true
+                go = bug2path.move(node, !newleftclear, addtopath)
+                //return go;
+              } else if (isOnMLine(node.x, node.y)) {
+                addtopath = true
+                go = bug2path.move(node, isOnMLine(node.x, node.y), addtopath)
+                //return go;
+              }  
+            if (go == null ) {
+              addtopath = true
+              go = bug2path.move(node, false, addtopath)
+            }
+            return go
+          }
+           else {
+            addtopath = true
+            go = bug2path.move(node, false, addtopath);
+            return go;
+          }
+          }
+        }
+
+
+      
       
     }
     function drawFullPath(x, y, x1, y1,) {
@@ -2028,16 +2095,30 @@ class Canvas extends React.Component {
       context.stroke();
       context.fill();
     }
-    function drawNodesAndLine(x, y, x1, y1, isBlocked) {
+    function drawNodesAndLine(x, y, x1, y1, isBlocked, isMLine, isLeftClear) {
       if (!step && !isBlocked) {
         return;
       }
-      var nodeColor = `rgb(0, 255, 0)`;
+      // if(!isBlocked) {
+      //   return;
+      // }
+
+      var nodeColor = `rgb(0, 0, 255)`;
       var lineColor = `rgb(0, 0, 255)`;
       if (!isBlocked) {
-        nodeColor = `rgb(255, 0, 255)`;
-        lineColor = `rgb(255, 255, 0)`;
+        nodeColor = `rgb(250, 0, 250)`;
+        lineColor = `rgb(250, 250, 0)`;
       }
+      // if(!isLeftClear){
+      //   nodeColor = `rgb(250, 0, 250)`;
+      //   lineColor = `rgb(0, 250, 0)`; 
+      // }
+      if(isLeftClear && !isMLine) {
+         nodeColor = `rgb(250, 250, 250)`;
+         lineColor = `rgb(0, 250, 250)`; 
+       //return;
+      }
+
 
       x = parseInt(x);
       y = parseInt(y);
@@ -2945,7 +3026,7 @@ class Footer extends React.Component {
           <li>CLICK THE BUTTON LABELED <strong>"CLICK TO SET GOAL"</strong> AND SET DOWN A GOAL MARKER (COLORED GREEN) ON THE CANVAS.</li>
           <li>CLICK THE BUTTON LABELED <strong>“CLICK TO SET OBSTACLE POINTS”</strong> TO DRAW ARBITRARY OBSTACLES ON THE CANVAS BY CLICKING ON THE CANVAS ITSELF, MOVING YOUR CURSOR TO A DIFFERENT LOCATION ON THE CANVAS, AND THEN CLICKING ON THAT LOCATION.</li>
           <ul>
-            <li>BY CLCKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
+            <li>BY CLICKING IN THE SHAPE OF A POLYGON AND CONNECTING YOUR LAST lINE SEGMENT TO THE FIRST POINT MADE ON THE CANVAS, THE SHAPE WILL AUTOFILL.</li>
             <li>YOU ARE ABLE TO REPEAT THIS STEP UNTIL SATISFIED.</li>
           </ul>          
           <li>CLICK THE PLAY BUTTON IN THE COMPONENT LABELED <strong>"SIMULATION CONTROL"</strong> TO WATCH BUG0 DO ITS MAGIC.</li>
