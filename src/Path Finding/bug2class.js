@@ -24,6 +24,7 @@ getNextPoint(direction) {
 // gets next point in the current direction
 return new node(this.current.x + (direction.x / (this.stepSize)), this.current.y + (direction.y / this.stepSize), this.current);
 }
+
 forward() {
 // move in a straight line in current direction
 if (this.distance < this.distanceThreshold) {
@@ -33,9 +34,6 @@ var nextpoint = this.getNextPoint(this.direction)
 return nextpoint;
 }
 
-isOnMLine(n) {
-
-}
 collide(n) {
 // severs current node, changes angle by 10 degrees
 // returns string to continue algorithm
