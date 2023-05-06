@@ -22,7 +22,7 @@ class Bug2 {
 
 getNextPoint(direction) {
 // gets next point in the current direction
-return {x: this.current.x + (direction.x / (this.stepSize)), y: this.current.y + (direction.y / this.stepSize)};
+return new node(this.current.x + (direction.x / (this.stepSize)), this.current.y + (direction.y / this.stepSize), this.current);
 }
 forward() {
 // move in a straight line in current direction
@@ -30,11 +30,12 @@ if (this.distance < this.distanceThreshold) {
 return;
 }
 var nextpoint = this.getNextPoint(this.direction)
-var new_n = new node(nextpoint.x, nextpoint.y, this.current)
-return new_n;
+return nextpoint;
 }
 
+isOnMLine(n) {
 
+}
 collide(n) {
 // severs current node, changes angle by 10 degrees
 // returns string to continue algorithm
@@ -50,21 +51,37 @@ var new_y = this.direction.x * Math.sin(thetarad) + this.direction.y* Math.cos(t
 this.direction = {x: new_x, y: new_y}
 this.stepsize *= 0.95
 // increases step size if it gets too small, helpful when there are multiple obstacles
-//  if((this.direction.x / this.stepSize) > (this.direction.y / this.stepSize)) {
-//   if((this.direction.x / this.stepSize) < 2) {
-//     this.stepSize *= 0.85
-// }
-// } else if ((this.direction.x / this.stepSize) < (this.direction.y / this.stepSize)) {
-// if((this.direction.y / this.stepSize) < 2) {
-//   this.stepSize *= 0.85
-// }
-// }
 
 this.current = n;
 
 return "again";
 
 
+}
+
+wallFollow(n, theta) {
+  // intuition: similar to collide(), but instead of rotating starting at the current direction, start at a ~90 degree angle from the current direction
+  
+  n = n.prev;
+   var leftdir = {x: -this.direction.y, y: this.direction.x}
+ // for(let i = -90; i < 90; i++) {
+ // let theta = i;
+  let thetarad = theta * Math.PI/180
+  this.distance = this.distance1(this.end, n)
+  // rotation matrix to change the angle
+  // (x,y) -> (xcostheta - ysintheta, xsintheta + ycostheta)
+  
+ var new_x = this.direction.x * Math.cos(thetarad) - this.direction.y* Math.sin(thetarad)
+ var new_y = this.direction.x * Math.sin(thetarad) + this.direction.y* Math.cos(thetarad)
+//   var new_x = leftdir.x * Math.cos(thetarad) - leftdir.y* Math.sin(thetarad)
+//   var new_y = leftdir.x * Math.sin(thetarad) + leftdir.y* Math.cos(thetarad)
+  this.direction = {x: new_x, y: new_y}
+  this.stepsize *= 1.01
+  // increases step size if it gets too small, helpful when there are multiple obstacles
+  this.current = n
+  //return "again";
+  return
+  
 }
 
 extractPath(n) {
@@ -77,12 +94,36 @@ while ( current_n != null) {
 }
 return path;
 }
+// gets the node 90 degrees to the left, useful to check if that's part of an obstacle
+get90Degrees() {
+  var leftdir = {x: -this.direction.y, y: this.direction.x}
+  var leftpt = this.getNextPoint(leftdir)
+  return new node(leftpt.x, leftpt.y, this.current)
+}
 
-move(n) {     
+move(n, mline, addtopath) {     
 // recursive step, alters distance, direction, and current node
 this.distance = this.distance1(this.end, n)
-this.direction = {x: this.end.x - n.x, y: this.end.y - n.y}
-this.current = n;   
+this.current = n;  
+if(mline) {
+  // if on M-line, move towards the goal
+this.direction = {x: this.end.x - n.x, y: this.end.y - n.y} 
+}
+if(!addtopath) {
+  // if there's no useful path, rotate by 10 degrees
+  let theta = 10;
+  let thetarad = theta * Math.PI/180
+  // rotation matrix to change the angle
+  // (x,y) -> (xcostheta - ysintheta, xsintheta + ycostheta)
+  var new_x = this.direction.x * Math.cos(thetarad) - this.direction.y* Math.sin(thetarad)
+  var new_y = this.direction.x * Math.sin(thetarad) + this.direction.y* Math.cos(thetarad)
+  let left = [n.getX(), n.getY()];
+  this.direction = {x: new_x, y: new_y}
+  if (this.distance1(left, this.end) < 0.5 ) {
+    return this.extractPath(this.T, n);
+}
+  return "again"
+}
 // increases step size if it gets too small, helpful when there are multiple obstacles
 if((this.direction.x / this.stepSize) > (this.direction.y / this.stepSize)) {
 if((this.direction.x / this.stepSize) < 5) {
